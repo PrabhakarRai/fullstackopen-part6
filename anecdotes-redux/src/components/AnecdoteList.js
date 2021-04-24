@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { voteAnecdote } from '../reducers/anecdotesReducer';
-import { upvoteNotification, clearNotification } from '../reducers/notificationReducer';
+import { voteAnecdote, initAnecdote } from '../reducers/anecdotesReducer';
+import { setNotification } from '../reducers/notificationReducer';
 import Anecdote from './Anecdote'
 
 const AnecdoteList = () => {
@@ -14,6 +14,11 @@ const AnecdoteList = () => {
     });
   })
   const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(initAnecdote());
+  }, [dispatch]);
+
   return (
     <div>
       {[...anecdotes].sort((a, b) => b.votes - a.votes).map((a) => (
@@ -21,9 +26,8 @@ const AnecdoteList = () => {
         key={a.id}
         data={a}
         handleClick={() => {
-          dispatch(voteAnecdote(a.id));
-          dispatch(upvoteNotification(a.text));
-          setTimeout(() => dispatch(clearNotification()), 5000);
+          dispatch(voteAnecdote(a));
+          dispatch(setNotification(`Upvote added: ${a.text}`));
         }}
       />)
       )}

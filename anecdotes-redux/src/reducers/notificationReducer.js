@@ -25,4 +25,14 @@ export const clearNotification = () => ({
   type: 'CLEAR_NOTIFI',
 });
 
+export const setNotification = (text) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'UPDATE_NOTIFI',
+      data: text,
+    });
+    setTimeout(() => dispatch(clearNotification()), 5000);
+  }
+}
+
 export default notificationReducer;
