@@ -36,9 +36,9 @@ const generateId = () =>
 
 const anecdotesReducer = (state = initAnecdotes, action) => {
   switch (action.type) {
-    case 'ADD':
+    case 'ADD_ANECDOTE':
       return state.concat(action.data);
-    case 'VOTE':
+    case 'VOTE_ANECDOTE':
       const anecdote = state.find((a) => {
         return a.id === action.data.id;
       });
@@ -55,7 +55,7 @@ export const createAnecdote = (text) => ({
       id: generateId(),
       votes: 0,
     },
-    type: 'ADD',
+    type: 'ADD_ANECDOTE',
   }
 );
 
@@ -63,7 +63,7 @@ export const voteAnecdote = (id) => ({
     data: {
       id: id,
     },
-    type: 'VOTE',
+    type: 'VOTE_ANECDOTE',
   }
 );
 
